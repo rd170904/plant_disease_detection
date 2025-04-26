@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+
+</head>
+<body>
+    <h1>Plant Disease Detection</h1>
+    <form id="uploadForm">
+        <input type="file" name="file" id="fileInput" accept="image/*" required>
+        <button type="submit">Upload and Predict</button>
+    </form>
+    <div id="loading" style="display: none;">Processing...</div>
+    <div id="result"></div>
+
+    <script>
+        document.querySelector("#uploadForm").onsubmit = async function(event) {
+            event.preventDefault();
+            const fileInput = document.getElementById("fileInput");
+            const resultDiv = document.getElementById("result");
+            const loadingDiv = document.getElementById("loading");
+
+            if (fileInput.files.length === 0) {
+                resultDiv.innerHTML = "<p style='color: red;'>Please select an image file.</p>";
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+
+            loadingDiv.style.display = "block";  // Show loading message
+            resultDiv.innerHTML = "";  // Clear previous results
+
+            try {
+                const response = await fetch("/predict", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                resultDiv.innerHTML = `
+                    <p>Predicted Class: <strong>${result.class}</strong></p>
+                    <p>Confidence: <strong>${result.confidence}%</strong></p>
+
+                `;
+
+            } catch (error) {
+                resultDiv.innerHTML = `<p style='color: red;'>Error: ${error.message}</p>`;
+            } finally {
+                loadingDiv.style.display = "none";  // Hide loading message
+            }
+        };
+    </script>
+</body>
+</html>
