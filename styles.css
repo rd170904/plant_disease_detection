@@ -1,0 +1,96 @@
+/* Full-page background with a glass effect */
+body {
+    font-family: 'Arial', sans-serif;
+    background: url("../static/bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+}
+
+/* Glass Effect Overlay */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 128, 0, 0.3); /* Green Tint */
+    backdrop-filter: blur(10px); /* Glass Blur Effect */
+    -webkit-backdrop-filter: blur(10px);
+    z-index: -1; /* Ensures it stays behind content */
+}
+
+/* Glassmorphic Form Container */
+form {
+    width: 40%;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1); /* Transparent White */
+    backdrop-filter: blur(15px); /* Enhanced Glass Effect */
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Header */
+h1 {
+    font-size: 28px;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Upload Button */
+button {
+    margin-top: 10px;
+    padding: 12px 20px;
+    background: rgba(0, 128, 0, 0.7); /* Green with transparency */
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: rgba(0, 128, 0, 1);
+}
+
+/* File Upload */
+input[type="file"] {
+    padding: 10px;
+    border: 2px solid rgba(0, 255, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #00FF00;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Prediction Result */
+#result {
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 18px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+/* Error Message */
+.error {
+    color: #FF4C4C;
+    font-size: 16px;
+    font-weight: bold;
+}
